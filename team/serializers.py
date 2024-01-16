@@ -5,7 +5,7 @@ from .models import Team
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model =  User
+        model = User
         fields = ('id','username','first_name','last_name')
 
 
