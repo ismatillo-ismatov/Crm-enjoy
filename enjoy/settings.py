@@ -44,14 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'django.contrib.postgres',
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'corsheaders',
-    'djoser',
+    'drf_yasg',
 
-
-    'team',
-    'lead',
     'workers',
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -67,6 +67,18 @@ REST_FRAMEWORK = {
 
     ],
 }
+
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -78,6 +90,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'enjoy.urls'
@@ -112,21 +125,7 @@ WSGI_APPLICATION = 'enjoy.wsgi.application'
 # }
 
 
-# host = 'localhost'
-# user = 'ismatov'
-# password = 'hunter_1995'
-# database = 'enjoyshoes'
-#
-# connection = mysql.connector.connect(
-#     host=host,
-#     user=user,
-#     password=password,
-#     database=database
-# )
-# cursor = connection.cursor()
-# query = "SELECT * FROM works"
-# cursor.execute(query)
-# results = cursor.fetchall()
+
 DATABASES = {
     'default':{
         'ENGINE':'django.db.backends.mysql',
@@ -179,5 +178,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
+AUTH_USER_MODEL = 'workers.CustomUser'
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_CREDENTIALS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
