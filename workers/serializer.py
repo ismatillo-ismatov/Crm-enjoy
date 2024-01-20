@@ -5,11 +5,12 @@ from .models import Worker,Product,CustomUser
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id','username')
+        fields = ('id','username','is_worker')
 class WorkerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Worker
-        fields = ('user','first_name','last_name','email','phone','is_worker','image')
+        fields =('__all__')
+        # fields = ('id','user','first_name','last_name','email','phone','image')
 
 
 class ProductSerializer(serializers.ModelSerializer):

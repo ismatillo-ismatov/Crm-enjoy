@@ -24,16 +24,18 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
 
 
+
+
 class WorkerViewSets(viewsets.ModelViewSet):
     queryset = Worker.objects.all()
     serializer_class = WorkerSerializer
     permission_classes = [IsAdminUser]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
     def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
     def perform_destroy(self, instance):
         instance.delete()
@@ -44,9 +46,5 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated, IsWorkerPermission]
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        worker_user = CustomUser.objects.get(id=user.id)
-        serializer.save(user=worker_user)
 
 
